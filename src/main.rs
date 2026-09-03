@@ -248,15 +248,26 @@ fn main() {
                     .map(|env| env.board.snake().length())
                     .max()
                     .unwrap_or_default();
+                let lengths: Vec<usize> = environments
+                    .iter()
+                    .map(|env| env.board.snake().length())
+                    .collect();
+                let len_sum: usize = lengths.iter().sum();
+                let len_mean: usize = if !lengths.is_empty() {
+                    len_sum / lengths.len()
+                } else {
+                    0
+                };
 
                 println!(
-                    "\x1b[31;1mGeneration {:5}/{}\x1b[0m => \x1b[32;1mmin: {:5}\x1b[0m, \x1b[33;1mmax: {:5}\x1b[0m, \x1b[34;1mavrg: {:5}\x1b[0m, \x1b[35;1mlen (max): {:2}\x1b[0m",
+                    "\x1b[31;1mGeneration {:5}/{}\x1b[0m => \x1b[32;1mmin: {:5}\x1b[0m, \x1b[33;1mmax: {:5}\x1b[0m, \x1b[34;1mavrg: {:5}\x1b[0m, \x1b[35;1mlen (max): {:2}\x1b[0m, \x1b[36;1mlen (mean): {:2}\x1b[0m",
                     generation + 1,
                     args.generations,
                     min,
                     max,
                     sum / len,
-                    len_max
+                    len_max,
+                    len_mean
                 );
             }
         }
